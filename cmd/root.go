@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/cobra"                    // Import cobra library
 )
 
-// rootCmd represents the root command of the applicatoin.
+// rootCmd represents the root command of the application.
 var rootCmd = &cobra.Command{
 	Use:   "unix-utils",
 	Short: "Unix Utility Commands",

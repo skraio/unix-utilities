@@ -3,9 +3,9 @@ package cmdflags
 
 import "os"
 
-// Flaga represents a command-line flag with its properties.
+// Flag represents a command-line flag with its properties.
 type Flag struct {
-	// Value indicats whether the flag is set.
+	// Value indicates whether the flag is set.
 	Value bool
 
 	// Name is the full name of the flag.

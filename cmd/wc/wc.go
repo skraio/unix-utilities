@@ -13,7 +13,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// flags represents the command-line flags to control the behavior of the 'wc' command
+// flags represents the command-line flags to control the behavior of the 'wc' command.
 var flags = []cmdflags.Flag{
 	{Value: false, Name: "lines", ShortHand: "l", DefaultValue: false, Description: "print the newline counts", Handler: lineCounter},
 	{Value: false, Name: "words", ShortHand: "w", DefaultValue: false, Description: "print the word counts", Handler: wordCounter},
@@ -97,7 +97,7 @@ func printStats(args []string, stats [][]int, longestLine int) {
 	w.Flush()
 }
 
-// calculateTotal calculates the total of each column in stats
+// calculateTotal calculates the total of each column in stats.
 func calculateTotal(stats [][]int, longestLine int) []int {
 	n := len(stats[0])
 	total := make([]int, n)
