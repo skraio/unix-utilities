@@ -27,6 +27,9 @@ var Cmd = &cobra.Command{
 	Short: "Line, word, byte and longest line count",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
+        if cmd.Flags().NFlag() == 0 {
+            setDefault()
+        }
 		stats, longestLine := executeWc(args)
 		printStats(args, stats, longestLine)
 	},
@@ -34,12 +37,17 @@ var Cmd = &cobra.Command{
 
 // init initializes the 'wc' command by setting up flags.
 func init() {
-	for i := range flags {
-		f := &flags[i]
-		Cmd.Flags().BoolVarP(&f.Value, f.Name, f.ShortHand, f.DefaultValue, f.Description)
-	}
+	cmdflags.ParseFlags(flags, Cmd)
+}
 
-	Cmd.Flags().SetInterspersed(false)
+// setDefault sets default flags if no flag provided
+func setDefault() {
+    for i := range flags {
+        f := &flags[i]
+        if f.Name != "longest" {
+            f.Value = true
+        }
+    }
 }
 
 // executeWc executes the 'wc' command with given arguments and returns
