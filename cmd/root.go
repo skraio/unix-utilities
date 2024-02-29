@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/skraio/unix-utilities/cmd/ls"
 	_ "github.com/skraio/unix-utilities/cmd/ls" // Import ls command
 	"github.com/skraio/unix-utilities/cmd/wc"   // Import wc command
 	"github.com/spf13/cobra"                    // Import cobra library
@@ -25,7 +26,7 @@ var rootCmd = &cobra.Command{
 // init initializes the root command and adds subcommands to it.
 func init() {
 	rootCmd.AddCommand(wc.Cmd)
-	// rootCmd.AddCommand(ls.lsCmd)
+	rootCmd.AddCommand(ls.Cmd)
 }
 
 // Execute runs the root command, handling any errors.

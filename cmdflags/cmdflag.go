@@ -1,7 +1,11 @@
 // Package cmdflags provides structure for handling command-line flags.
 package cmdflags
 
-import "os"
+import (
+	"os"
+
+	"github.com/spf13/cobra"
+)
 
 // Flag represents a command-line flag with its properties.
 type Flag struct {
@@ -22,4 +26,13 @@ type Flag struct {
 
 	// Handler is the function that will be executed when the flag is encountered.
 	Handler func(*os.File) int
+}
+
+func ParseFlags(flags []Flag, cmd *cobra.Command) {
+	for i := range flags {
+		f := &flags[i]
+		cmd.Flags().BoolVarP(&f.Value, f.Name, f.ShortHand, f.DefaultValue, f.Description)
+	}
+
+	cmd.Flags().SetInterspersed(false)
 }
