@@ -4,15 +4,14 @@ import (
 	"bufio"
 	"bytes"
 	"io"
-	"log"
 	"os"
 )
 
 // lineCounter counts the number of lines in a file.
-func lineCounter(f *os.File) int {
+func lineCounter(f *os.File) (int, error) {
 	_, err := f.Seek(0, 0)
 	if err != nil {
-		log.Print(err.Error())
+        return 0, err
 	}
 
 	count := 0
@@ -27,14 +26,14 @@ func lineCounter(f *os.File) int {
 		count += bytes.Count(buf[:r], newLineChar)
 	}
 
-	return count
+	return count, nil
 }
 
 // wordCounter counts the number of words in a file.
-func wordCounter(f *os.File) int {
+func wordCounter(f *os.File) (int, error) {
 	_, err := f.Seek(0, 0)
 	if err != nil {
-		log.Print(err.Error())
+        return 0, err
 	}
 
 	fileScanner := bufio.NewScanner(f)
@@ -45,14 +44,14 @@ func wordCounter(f *os.File) int {
 		count++
 	}
 
-	return count
+	return count, nil
 }
 
 // byteCounter counts the number of bytes in a file.
-func byteCounter(f *os.File) int {
+func byteCounter(f *os.File) (int, error) {
 	_, err := f.Seek(0, 0)
 	if err != nil {
-		log.Print(err.Error())
+        return 0, err
 	}
 
 	fileScanner := bufio.NewScanner(f)
@@ -63,14 +62,14 @@ func byteCounter(f *os.File) int {
 		count++
 	}
 
-	return count
+	return count, nil
 }
 
 // longestLine finds the length of the longest line in a file.
-func longestLine(f *os.File) int {
+func longestLine(f *os.File) (int, error) {
 	_, err := f.Seek(0, 0)
 	if err != nil {
-		log.Print(err.Error())
+        return 0, err
 	}
 
 	fileScanner := bufio.NewScanner(f)
@@ -81,5 +80,5 @@ func longestLine(f *os.File) int {
 		maxLen = max(maxLen, len(fileScanner.Text()))
 	}
 
-	return maxLen
+	return maxLen, nil
 }

@@ -2,10 +2,10 @@ package wc
 
 import (
 	"log"
-	"os"
 	"testing"
 
 	"github.com/skraio/unix-utilities/internal/assert"
+	"github.com/skraio/unix-utilities/internal/testutils"
 )
 
 func TestLineCounter(t *testing.T) {
@@ -27,13 +27,21 @@ func TestLineCounter(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			dummyFileName, cleanup := createDummyFile(t, tt.text)
+			dummyFileName, cleanup := testutils.CreateDummyFile(t, tt.text)
 			defer cleanup()
 
-			file := openDummyFile(t, dummyFileName)
+			file, err := testutils.OpenDummyFile(t, dummyFileName)
+            if err != nil {
+                log.Print(err.Error())
+                return
+            }
 			defer file.Close()
 
-			ans := lineCounter(file)
+			ans, err := lineCounter(file)
+            if err != nil {
+                log.Print(err.Error())
+                return
+            }
 
 			assert.Equal(t, ans, tt.want)
 		})
@@ -60,13 +68,21 @@ func TestWordCounter(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			dummyFileName, cleanup := createDummyFile(t, tt.text)
+			dummyFileName, cleanup := testutils.CreateDummyFile(t, tt.text)
 			defer cleanup()
 
-			file := openDummyFile(t, dummyFileName)
+			file, err := testutils.OpenDummyFile(t, dummyFileName)
+            if err != nil {
+                log.Print(err.Error())
+                return
+            }
 			defer file.Close()
 
-			ans := wordCounter(file)
+			ans, err := wordCounter(file)
+            if err != nil {
+                log.Print(err.Error())
+                return
+            }
 
 			assert.Equal(t, ans, tt.want)
 		})
@@ -93,13 +109,21 @@ func TestByteCounter(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			dummyFileName, cleanup := createDummyFile(t, tt.text)
+			dummyFileName, cleanup := testutils.CreateDummyFile(t, tt.text)
 			defer cleanup()
 
-			file := openDummyFile(t, dummyFileName)
+			file, err := testutils.OpenDummyFile(t, dummyFileName)
+            if err != nil {
+                log.Print(err.Error())
+                return
+            }
 			defer file.Close()
 
-			ans := byteCounter(file)
+			ans, err := byteCounter(file)
+            if err != nil {
+                log.Print(err.Error())
+                return
+            }
 
 			assert.Equal(t, ans, tt.want)
 		})
@@ -126,39 +150,23 @@ func TestLongestLine(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-            dummyFileName, cleanup := createDummyFile(t, tt.text)
-            defer cleanup()
+			dummyFileName, cleanup := testutils.CreateDummyFile(t, tt.text)
+			defer cleanup()
 
-            file := openDummyFile(t, dummyFileName)
-            defer file.Close()
+			file, err := testutils.OpenDummyFile(t, dummyFileName)
+            if err != nil {
+                log.Print(err.Error())
+                return
+            }
+			defer file.Close()
 
-			ans := longestLine(file)
+			ans, err := longestLine(file)
+            if err != nil {
+                log.Print(err.Error())
+                return
+            }
 
 			assert.Equal(t, ans, tt.want)
 		})
 	}
-}
-
-func createDummyFile(t *testing.T, test []byte) (string, func()) {
-	dummyFileName := "dummy_file.txt"
-	err := os.WriteFile(dummyFileName, test, 0644)
-	if err != nil {
-		log.Fatalf("Error creating dummy file: %v", err)
-	}
-
-	return dummyFileName, func() {
-		err := os.Remove(dummyFileName)
-		if err != nil {
-			t.Fatalf("Error removing dummy file: %v", err)
-		}
-	}
-}
-
-func openDummyFile(t *testing.T, dummyFileName string) *os.File {
-	file, err := os.Open(dummyFileName)
-	if err != nil {
-		log.Print(err.Error())
-	}
-
-	return file
 }

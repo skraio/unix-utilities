@@ -3,7 +3,6 @@ package ls
 import (
 	"fmt"
 	"io/fs"
-	"log"
 	"os"
 	"os/user"
 	"sort"
@@ -11,7 +10,7 @@ import (
 	"syscall"
 )
 
-func longFormat(file fs.FileInfo, fHumanReadable bool) FileAttributes {
+func longFormat(file fs.FileInfo) (FileAttributes, error) {
 	fileMode := file.Mode()
 
 	var nlink string
@@ -25,14 +24,14 @@ func longFormat(file fs.FileInfo, fHumanReadable bool) FileAttributes {
 
 		u, err := user.LookupId(fmt.Sprintf("%d", id))
 		if err != nil {
-			log.Print(err.Error())
+            return FileAttributes{}, err
 		}
 
 		uid = u.Username
 	}
 
 	var fileSize string
-	if fHumanReadable {
+	if pFlags.Readable {
 		fileSize = humanReadableSize(file.Size())
 	} else {
 		fileSize = strconv.FormatInt(file.Size(), 10)
@@ -40,7 +39,7 @@ func longFormat(file fs.FileInfo, fHumanReadable bool) FileAttributes {
 
 	modTime := file.ModTime().Format("Jan _2 15:04")
 
-	return FileAttributes{fileMode, nlink, uid, fileSize, modTime}
+	return FileAttributes{fileMode, nlink, uid, fileSize, modTime}, nil
 }
 
 func humanReadableSize(size int64) string {
@@ -63,10 +62,4 @@ func reverseOrder(content []os.FileInfo) {
 	sort.Slice(content, func(i, j int) bool {
 		return i > j
 	})
-}
-
-func oneEntryPerLine() {
-}
-
-func formatDirectoriesAndExecutable() {
 }
