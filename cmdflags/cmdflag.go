@@ -28,6 +28,7 @@ type Flag struct {
 	Handler func(*os.File) (int, error)
 }
 
+// ParseFlags parses the provides flags and associates them with Flag structure.
 func ParseFlags(flags []Flag, cmd *cobra.Command) {
 	for i := range flags {
 		f := &flags[i]

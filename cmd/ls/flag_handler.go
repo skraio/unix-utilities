@@ -10,6 +10,7 @@ import (
 	"syscall"
 )
 
+// longFormat retrieves detailed file attributes in a structurized format.
 func longFormat(file fs.FileInfo) (FileAttributes, error) {
 	fileMode := file.Mode()
 
@@ -24,14 +25,14 @@ func longFormat(file fs.FileInfo) (FileAttributes, error) {
 
 		u, err := user.LookupId(fmt.Sprintf("%d", id))
 		if err != nil {
-            return FileAttributes{}, err
+			return FileAttributes{}, err
 		}
 
 		uid = u.Username
 	}
 
 	var fileSize string
-	if pFlags.Readable {
+	if pFlags.readable {
 		fileSize = humanReadableSize(file.Size())
 	} else {
 		fileSize = strconv.FormatInt(file.Size(), 10)
@@ -42,6 +43,7 @@ func longFormat(file fs.FileInfo) (FileAttributes, error) {
 	return FileAttributes{fileMode, nlink, uid, fileSize, modTime}, nil
 }
 
+// humanReadableSize converts file size into a human-readable format.
 func humanReadableSize(size int64) string {
 	var fileSize string
 	if size >= 1024*1024 {
@@ -52,12 +54,14 @@ func humanReadableSize(size int64) string {
 	return fileSize
 }
 
+// sortByModTime sorts files by modification time.
 func sortByModTime(content []os.FileInfo) {
 	sort.Slice(content, func(i, j int) bool {
 		return content[j].ModTime().Before(content[i].ModTime())
 	})
 }
 
+// reverseOrder reverses the order of files.
 func reverseOrder(content []os.FileInfo) {
 	sort.Slice(content, func(i, j int) bool {
 		return i > j

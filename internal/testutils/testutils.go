@@ -17,7 +17,7 @@ func CreateDummyFile(t *testing.T, test []byte) (string, func()) {
 		err := os.Remove(dummyFileName)
 		if err != nil {
 			// t.Fatalf("Error removing dummy file: %v", err)
-            return
+			return
 		}
 	}
 }
@@ -25,7 +25,7 @@ func CreateDummyFile(t *testing.T, test []byte) (string, func()) {
 func OpenDummyFile(t *testing.T, dummyFileName string) (*os.File, error) {
 	file, err := os.Open(dummyFileName)
 	if err != nil {
-        return nil, err
+		return nil, err
 	}
 
 	return file, nil

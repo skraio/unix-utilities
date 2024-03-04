@@ -11,7 +11,7 @@ import (
 func lineCounter(f *os.File) (int, error) {
 	_, err := f.Seek(0, 0)
 	if err != nil {
-        return 0, err
+		return 0, err
 	}
 
 	count := 0
@@ -33,7 +33,7 @@ func lineCounter(f *os.File) (int, error) {
 func wordCounter(f *os.File) (int, error) {
 	_, err := f.Seek(0, 0)
 	if err != nil {
-        return 0, err
+		return 0, err
 	}
 
 	fileScanner := bufio.NewScanner(f)
@@ -51,7 +51,7 @@ func wordCounter(f *os.File) (int, error) {
 func byteCounter(f *os.File) (int, error) {
 	_, err := f.Seek(0, 0)
 	if err != nil {
-        return 0, err
+		return 0, err
 	}
 
 	fileScanner := bufio.NewScanner(f)
@@ -69,7 +69,7 @@ func byteCounter(f *os.File) (int, error) {
 func longestLine(f *os.File) (int, error) {
 	_, err := f.Seek(0, 0)
 	if err != nil {
-        return 0, err
+		return 0, err
 	}
 
 	fileScanner := bufio.NewScanner(f)

@@ -23,7 +23,7 @@ var flags = []cmdflags.Flag{
 
 // Cmd represents the 'wc' command configuration using Cobra.
 var Cmd = &cobra.Command{
-	Use:   "wc [file]... [-f flags]",
+	Use:   "wc [-f flags] [file]... ",
 	Short: "Line, word, byte and longest line count",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
@@ -31,10 +31,10 @@ var Cmd = &cobra.Command{
 			setDefault()
 		}
 		stats, longestLine, err := executeWc(args)
-        if err != nil {
+		if err != nil {
 			log.Print(err.Error())
-            return
-        }
+			return
+		}
 		printStats(args, stats, longestLine)
 	},
 }
@@ -62,7 +62,7 @@ func executeWc(args []string) ([][]int, int, error) {
 	for _, filename := range args {
 		file, err := os.Open(filename)
 		if err != nil {
-            return nil, 0, err
+			return nil, 0, err
 		}
 		defer file.Close()
 
@@ -73,17 +73,17 @@ func executeWc(args []string) ([][]int, int, error) {
 			}
 
 			if f.Name == "longest" {
-                currLongestLine, err := f.Handler(file)
-                if err != nil {
+				currLongestLine, err := f.Handler(file)
+				if err != nil {
 
-                }
+				}
 				longestLine = max(longestLine, currLongestLine)
 				fileStats = append(fileStats, longestLine)
 			} else {
-                currStats, err := f.Handler(file)
-                if err != nil {
-                    return nil, 0, err
-                }
+				currStats, err := f.Handler(file)
+				if err != nil {
+					return nil, 0, err
+				}
 				fileStats = append(fileStats, currStats)
 			}
 		}

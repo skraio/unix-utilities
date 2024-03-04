@@ -31,17 +31,17 @@ func TestLineCounter(t *testing.T) {
 			defer cleanup()
 
 			file, err := testutils.OpenDummyFile(t, dummyFileName)
-            if err != nil {
-                log.Print(err.Error())
-                return
-            }
+			if err != nil {
+				log.Print(err.Error())
+				return
+			}
 			defer file.Close()
 
 			ans, err := lineCounter(file)
-            if err != nil {
-                log.Print(err.Error())
-                return
-            }
+			if err != nil {
+				log.Print(err.Error())
+				return
+			}
 
 			assert.Equal(t, ans, tt.want)
 		})
@@ -72,17 +72,17 @@ func TestWordCounter(t *testing.T) {
 			defer cleanup()
 
 			file, err := testutils.OpenDummyFile(t, dummyFileName)
-            if err != nil {
-                log.Print(err.Error())
-                return
-            }
+			if err != nil {
+				log.Print(err.Error())
+				return
+			}
 			defer file.Close()
 
 			ans, err := wordCounter(file)
-            if err != nil {
-                log.Print(err.Error())
-                return
-            }
+			if err != nil {
+				log.Print(err.Error())
+				return
+			}
 
 			assert.Equal(t, ans, tt.want)
 		})
@@ -113,17 +113,17 @@ func TestByteCounter(t *testing.T) {
 			defer cleanup()
 
 			file, err := testutils.OpenDummyFile(t, dummyFileName)
-            if err != nil {
-                log.Print(err.Error())
-                return
-            }
+			if err != nil {
+				log.Print(err.Error())
+				return
+			}
 			defer file.Close()
 
 			ans, err := byteCounter(file)
-            if err != nil {
-                log.Print(err.Error())
-                return
-            }
+			if err != nil {
+				log.Print(err.Error())
+				return
+			}
 
 			assert.Equal(t, ans, tt.want)
 		})
@@ -154,17 +154,17 @@ func TestLongestLine(t *testing.T) {
 			defer cleanup()
 
 			file, err := testutils.OpenDummyFile(t, dummyFileName)
-            if err != nil {
-                log.Print(err.Error())
-                return
-            }
+			if err != nil {
+				log.Print(err.Error())
+				return
+			}
 			defer file.Close()
 
 			ans, err := longestLine(file)
-            if err != nil {
-                log.Print(err.Error())
-                return
-            }
+			if err != nil {
+				log.Print(err.Error())
+				return
+			}
 
 			assert.Equal(t, ans, tt.want)
 		})

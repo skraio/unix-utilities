@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/skraio/unix-utilities/cmd/cat"
 	"github.com/skraio/unix-utilities/cmd/ls"
-	_ "github.com/skraio/unix-utilities/cmd/ls" // Import ls command
-	"github.com/skraio/unix-utilities/cmd/wc"   // Import wc command
-	"github.com/spf13/cobra"                    // Import cobra library
+	"github.com/skraio/unix-utilities/cmd/wc"
+	"github.com/spf13/cobra"
 )
 
 // rootCmd represents the root command of the application.
@@ -27,6 +27,7 @@ var rootCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(wc.Cmd)
 	rootCmd.AddCommand(ls.Cmd)
+	rootCmd.AddCommand(cat.Cmd)
 }
 
 // Execute runs the root command, handling any errors.
